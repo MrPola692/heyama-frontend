@@ -19,8 +19,11 @@ export default function Home() {
     setLoading(true);
     try {
       const res = await getObjects(p);
-      setObjects(res.data);
-      setTotalPages(res.totalPages);
+      setObjects(res?.data ?? []);
+      setTotalPages(res?.totalPages ?? 1);
+    } catch {
+      setObjects([]);
+      setTotalPages(1);
     } finally {
       setLoading(false);
     }
