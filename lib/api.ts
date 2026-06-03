@@ -13,8 +13,16 @@ export interface HeyamaObject {
   createdAt: string;
 }
 
-export const getObjects = () =>
-  api.get<HeyamaObject[]>('/objects').then((r) => r.data);
+export interface PaginatedResponse {
+  data: HeyamaObject[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export const getObjects = (page = 1, limit = 10) =>
+  api.get<PaginatedResponse>(`/objects?page=${page}&limit=${limit}`).then((r) => r.data);
 
 export const getObject = (id: string) =>
   api.get<HeyamaObject>(`/objects/${id}`).then((r) => r.data);
